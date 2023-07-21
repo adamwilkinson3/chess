@@ -100,6 +100,11 @@ function App() {
   const [castling] = useState({castleWL: 1, castleWR: 1, castleBL: 1, castleBR: 1});
   const [kingPosition] = useState({kingW: [4, 7], kingB: [4, 0]});
   const [turn] = useState([false]); // 0 - white turn, 1 - black turn
+  let modal1 = document.querySelector("[data-modal]") as any;
+  let modal2 = document.querySelector("[data-modal2]") as any;
+  let modal3 = document.querySelector("[data-modal3]") as any;
+  let modal4 = document.querySelector("[data-modal4]") as any;
+  let modal5 = document.querySelector("[data-modal5]") as any;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////Chess Logic
   function chessMove(x: any, y: any) {
@@ -1160,7 +1165,7 @@ function sameColor(x:number, y:number, color:number) {
 
 
 
-  const dragStartHandler = (piece:string, e: React.DragEvent) => {
+  const dragStartHandler = (piece:string, e: any) => {
     e.dataTransfer.setData("drag-item", piece);
     let start = e.target.parentNode.id;
     e.dataTransfer.setData("start-loc", start);
@@ -1230,11 +1235,11 @@ function sameColor(x:number, y:number, color:number) {
         if(piece.slice(0, -1) == 'pawn') {
           if(target.slice(-1) == '0') {
             pwnP = 0;
-            document.querySelector("[data-modal]").showModal();
+            modal1.showModal();
           }
           if(target.slice(-1) == '7') {
             pwnP = 0;
-            document.querySelector("[data-modal2]").showModal();
+            modal2.showModal();
           }
         }
   
@@ -1324,7 +1329,7 @@ function sameColor(x:number, y:number, color:number) {
           }
         }
       }
-      clr ? document.querySelector("[data-modal3]").showModal() : document.querySelector("[data-modal4]").showModal();
+      clr ? modal3.showModal() : modal4.showModal();
       onUnclickHandler();
       return null;
     } else if(underAttack[clr] == 2) {
@@ -1353,7 +1358,7 @@ function sameColor(x:number, y:number, color:number) {
         }
       }
       if(brk) {
-        clr ? document.querySelector("[data-modal3]").showModal() : document.querySelector("[data-modal4]").showModal();
+        clr ? modal3.showModal() : modal4.showModal();
         onUnclickHandler();
         return null;
       }
@@ -1386,7 +1391,7 @@ function sameColor(x:number, y:number, color:number) {
         }
       }
       if(stalemate && pwnP) {
-        document.querySelector("[data-modal5]").showModal();
+        modal5.showModal();
       }
     }
    
@@ -1431,7 +1436,7 @@ function sameColor(x:number, y:number, color:number) {
               }
             }
           }
-          clr ? document.querySelector("[data-modal3]").showModal() : document.querySelector("[data-modal4]").showModal();
+          clr ? modal3.showModal() : modal4.showModal();
         } else if(underAttack[clr] == 2) {
           let brk = 1;
           if(clr) {
@@ -1458,7 +1463,7 @@ function sameColor(x:number, y:number, color:number) {
             }
           }
           if(brk) {
-            clr ? document.querySelector("[data-modal3]").showModal() : document.querySelector("[data-modal4]").showModal();
+            clr ? modal3.showModal() : modal4.showModal();
           }
         }
   }
@@ -1547,14 +1552,14 @@ function sameColor(x:number, y:number, color:number) {
       }
     }
     if(stalemate && !underAttack[clr]) {
-      document.querySelector("[data-modal5]").showModal();
+      modal5.showModal();
     }
   }
 
   const modalHandler = (piece: string) => {
     pawnPromotion(piece);
-    document.querySelector("[data-modal]").close();
-    document.querySelector("[data-modal2]").close();
+    modal1.close();
+    modal2.close();
   }
   const escHandler = (e: React.KeyboardEvent) => {
     if(e.key === 'Escape'){
